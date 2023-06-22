@@ -1,8 +1,8 @@
 /* global globalThis, addEventListener, postMessage, BigInt */
 
 /**
- * Adapted the code in to order to run in a web worker. 
- * 
+ * Adapted the code in to order to run in a web worker.
+ *
  * Original author: Benjamin Hollis
  */
 
@@ -37,18 +37,18 @@ function valueToHTML(value) {
 }
 
 function arrayToHTML(json) {
-	let indexValue, length, output = "<div class=\"collapser\"></div>[<span class=\"ellipsis\"></span><ul class=\"array collapsible\">", hasContents = false;
-	for (indexValue = 0, length = json.length; indexValue < length; indexValue++) {
-		hasContents = true;
+	let length = json.length
+	if (length === 0) return "[ ] (0)"
+
+	let output = `<div class=\"collapser\"></div>[<span class=\"ellipsis\"></span><ul class=\"array collapsible\">`
+	for (let indexValue = 0; indexValue < length; indexValue++) {
 		output += "<li><div class=\"hoverable\">";
 		output += valueToHTML(json[indexValue]);
 		if (indexValue < length - 1)
 			output += ",";
 		output += "</div></li>";
 	}
-	output += "</ul>]";
-	if (!hasContents)
-		output = "[ ]";
+	output += `</ul>] (${length})`;
 	return output;
 }
 
